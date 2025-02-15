@@ -65,10 +65,11 @@ export const auth = getAuth();  //authentication object provided by firebase
 
 
 export const signInWithGooglePopup = () => signInWithPopup(auth,googleProvider)
-
+//export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider) //notworking returning null after redirect 
 export const db = getFirestore()
 
-export const createUserDocumentFromAuth = async (user)=>{
+export const createUserDocumentFromAuth = async (user,additionalInormation={})=>{
+    console.log(user)
     const userDocRef = doc(db,'users',user.uid) //create document reference with unique id
     //console.log(userDocRef)
 
@@ -82,7 +83,8 @@ export const createUserDocumentFromAuth = async (user)=>{
             await setDoc(userDocRef,{
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInormation
             })
         }
         catch(e){
@@ -91,3 +93,17 @@ export const createUserDocumentFromAuth = async (user)=>{
     }
     return userDocRef
 }
+
+
+export const signInUserWithEmailAndPassword = async (email,password)=>{ 
+    console.log(email,password)
+    if(!email || !password) return; //return if email or password are empty
+    return signInWithEmailAndPassword(auth,email,password) //else authenticat the user 
+}
+
+export const createAuthUserWithEmailAndPassword = async (email,password)=>{ 
+    console.log('creating user')
+    console.log(email,password)
+    if(!email || !password) return; //return if email and password are null
+    return createUserWithEmailAndPassword(auth,email,password) //else create the authenticaion data for the user)
+} 
