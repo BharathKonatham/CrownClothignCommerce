@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { createAuthUserWithEmailAndPassword,createUserDocumentFromAuth } from '../../utils/Firebase.utils'
 import FormInput from '../form-input/form-input.component'
 import './sign-up-form.styles.scss'
 import Buttton from '../button/button.component'
+
 const defaultFormFields = {
     displayName:'',
     email:'',
     confirmPassword:'',
     password:''
 }
+
 const SignUpForm = () => {
     const [formFields,setFormFields]= useState(defaultFormFields)
-
+    //const {setCurrentUser} = useContext(UserContext) //removed to implement it in autchange listner in usercontext comp
     const {displayName,email,confirmPassword,password} = formFields
 
     const handleChange = (e)=>{
@@ -29,8 +31,8 @@ const SignUpForm = () => {
             try{
                 const {user} = await createAuthUserWithEmailAndPassword(email,password)
                 console.log(user)
-                const fd = await createUserDocumentFromAuth(user,{displayName})
-                console.log(fd)
+                //setCurrentUser(user)  //moving this to autlistner call back
+                await createUserDocumentFromAuth(user,{displayName})
                 setFormFields(defaultFormFields)
             }catch(e){
                 if(e.code === 'auth/email-already-in-use')

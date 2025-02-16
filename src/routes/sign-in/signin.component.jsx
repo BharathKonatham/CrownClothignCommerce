@@ -16,9 +16,9 @@ import './authentication.styles.scss'
 const Authentication = () => {
     const logGoogleUser = async()=>{
         const {user}  = await signInWithGooglePopup();
-        console.log(user)
-        const userDocRef = await createUserDocumentFromAuth(user)
-        console.log(userDocRef)
+        //console.log(user)
+        // const userDocRef = await createUserDocumentFromAuth(user)
+        // console.log(userDocRef) //moved to usercontext component using authchange listner
     }
     
     return (

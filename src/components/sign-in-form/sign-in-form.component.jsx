@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
 import './sign-in-form.styles.scss'
@@ -9,20 +9,23 @@ import {
     signInUserWithEmailAndPassword,
     signUserWithEmailAndPassword } from '../../utils/Firebase.utils'
 
+
 const defaultFormFields = {
     email:'',
     password:''
 }
+
 const SignInForm = () => {
     const [formFields,setFormFields] = useState(defaultFormFields)
+    //removed below code to implement it in autchange listner in usercontext comp
+    //const {setCurrentUser} = useContext(UserContext) //extract the setCurrentUser from our userContext,using useContexthook
     const {email,password} = formFields
-
     const logGoogleUser = async()=>{
         const {user}  = await signInWithGooglePopup();
         console.log(user)
+        // setCurrentUser(user) //moving this to autlistner call back
         const userDocRef = await createUserDocumentFromAuth(user)
         console.log(userDocRef)    
-
         setFormFields(defaultFormFields)
         
     }
@@ -36,10 +39,11 @@ const SignInForm = () => {
     const handleSubmit = async (event)=>{
         event.preventDefault()
         try{
-           const response = await signInUserWithEmailAndPassword(email,password)
-           console.log(response)
+            const {user} = await signInUserWithEmailAndPassword(email,password)
+            //setCurrentUser(user)  //moving this to autlistner call back
+            setFormFields(defaultFormFields)
         }catch(e){
-           e.code === 'auth/invalid-credential'? alert('auth/invalid-credential'):console.log(e)
+            e.code === 'auth/invalid-credential'? alert('auth/invalid-credential'):console.log(e)
         }
     }
     return (

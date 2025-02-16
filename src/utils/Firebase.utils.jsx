@@ -107,3 +107,12 @@ export const createAuthUserWithEmailAndPassword = async (email,password)=>{
     if(!email || !password) return; //return if email and password are null
     return createUserWithEmailAndPassword(auth,email,password) //else create the authenticaion data for the user)
 } 
+
+
+//signout 
+export const signOutUser =async ()=> await signOut(auth)
+
+export const onAuthStateChangedListner = (callback)=> {
+    
+    onAuthStateChanged(auth,callback) //call back is implemented in usercontext component
+}

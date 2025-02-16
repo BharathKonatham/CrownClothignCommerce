@@ -1,1 +1,3 @@
 completed Authenticatio page 
+
+completed everyting with Authentication using context api, in user context
