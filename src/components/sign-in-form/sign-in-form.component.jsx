@@ -3,11 +3,11 @@ import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
 import './sign-in-form.styles.scss'
 import { 
-    auth, 
+    
     signInWithGooglePopup, 
     createUserDocumentFromAuth,
     signInUserWithEmailAndPassword,
-    signUserWithEmailAndPassword } from '../../utils/Firebase.utils'
+    } from '../../utils/Firebase.utils'
 
 
 const defaultFormFields = {
@@ -39,7 +39,8 @@ const SignInForm = () => {
     const handleSubmit = async (event)=>{
         event.preventDefault()
         try{
-            const {user} = await signInUserWithEmailAndPassword(email,password)
+            //const {user} = 
+            await signInUserWithEmailAndPassword(email,password)
             //setCurrentUser(user)  //moving this to autlistner call back
             setFormFields(defaultFormFields)
         }catch(e){
