@@ -13,12 +13,12 @@ const Navigation = () => {
   console.log(currentUser)
 
   const signOutHandler = async ()=>{
-
+    
     const response = await signOutUser()
     // setCurrentUser(null)
     // console.log(response)
   }
-
+  const role = 'user'
   return (
     <>
       <div className='navigation'>
@@ -34,9 +34,10 @@ const Navigation = () => {
             SIGN IN
             </Link> )}
           
-            <CartIcon />
+            {role ==='curator'? (<Link to="/create-product">CREATE</Link>):(<CartIcon />)}
         </div>
-        {isCartOpen && <CartDropdown />}
+        
+        {isCartOpen && <CartDropdown />} 
       </div>
       <Outlet />
     </>

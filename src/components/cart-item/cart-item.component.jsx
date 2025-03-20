@@ -15,8 +15,6 @@ const CartItem = ({cartitem}) => {
             {quantity} x {price}
         </span>
         </div>
-       
-        
     </div>
   )
 }
