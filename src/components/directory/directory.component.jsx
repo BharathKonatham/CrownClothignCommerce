@@ -27,6 +27,8 @@ const categories = [
     "title": "mens",
     "image_url": "https://i.ibb.co/R70vBrQ/men.png"
   },
+  
+  
   ]
 export const Directory = () => {//{categories} - use this when spring is running
   return (

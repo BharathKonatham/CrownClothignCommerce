@@ -18,7 +18,15 @@ const Navigation = () => {
     // setCurrentUser(null)
     // console.log(response)
   }
+<<<<<<< Updated upstream
   const role = 'user'
+=======
+<<<<<<< Updated upstream
+
+=======
+  const role = 'curator'
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   return (
     <>
       <div className='navigation'>
