@@ -18,15 +18,11 @@ const Navigation = () => {
     // setCurrentUser(null)
     // console.log(response)
   }
-<<<<<<< Updated upstream
-  const role = 'user'
-=======
-<<<<<<< Updated upstream
 
-=======
+
+
   const role = 'curator'
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
   return (
     <>
       <div className='navigation'>
@@ -41,8 +37,8 @@ const Navigation = () => {
             (<Link className='nav-link' to='/sign-in'>
             SIGN IN
             </Link> )}
-          
-            {role ==='curator'? (<Link to="/create-product">CREATE</Link>):(<CartIcon />)}
+          {<CartIcon />}
+            {role ==='curator'&& (<Link to="/create-product">CREATE</Link>)}
         </div>
         
         {isCartOpen && <CartDropdown />} 
