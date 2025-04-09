@@ -10,20 +10,21 @@ const defaultFormFields = {
     lastName: '',
     email: '',
     confirmPassword: '',
-    password: ''
+    password: '',
+    roles: ''
 }
-
+const defaultSignUpStatus={
+    success: false,
+    error: false,
+    value: ''
+}
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
     //const {setCurrentUser} = useContext(UserContext) //removed to implement it in autchange listner in usercontext comp
-    const { firstName, lastName, email, confirmPassword, password } = formFields
-    const [signUp, setsignUp] = useState({
-        success: false,
-        error: false,
-        value: ''
-    });
+    const { firstName, lastName, email, confirmPassword, password, roles } = formFields
+    const [signUp, setsignUp] = useState(defaultSignUpStatus);
     const handleChange = (e) => {
-
+        setsignUp(defaultSignUpStatus)
         setFormFields({
             ...formFields,
             [e.target.name]: e.target.value
@@ -34,30 +35,31 @@ const SignUpForm = () => {
 
         e.preventDefault()
         if (password === confirmPassword) {
-                try {
-                    const response = await axiosInstance.post('/authentication/register', {
-                        firstName,
-                        lastName,
-                        email,
-                        password
-                    });
-                    console.log('User signed up:', response.data);
-                    setsignUp({
-                        ...signUp,
-                        success: true,
-                        error: false,
-                        value: response.data.message
-                    })
-                    setFormFields(defaultFormFields)
-                    // return response.data;
-                } catch (error) {
-                    console.error('Signup failed:', error.response.data);
-                    setsignUp({
-                        ...signUp,
-                        error: true,
-                        value: error.response.data.message
-                    })
-                }
+            try {
+                const response = await axiosInstance.post('/authentication/register', {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    roles: roles === "ROLE_ADMIN" ? ["ROLE_ADMIN"] : ["ROLE_USER"]
+                });
+                console.log('User signed up:', response.data);
+                setsignUp({
+                    ...signUp,
+                    success: true,
+                    error: false,
+                    value: response.data.message
+                })
+                setFormFields(defaultFormFields)
+                // return response.data;
+            } catch (error) {
+                console.error('Signup failed:', error.response.data);
+                setsignUp({
+                    ...signUp,
+                    error: true,
+                    value: error.response.data.message
+                })
+            }
 
         }
 
@@ -111,12 +113,36 @@ const SignUpForm = () => {
                     value={confirmPassword}
                     onChange={handleChange}
                 />
+                <span>Select Role</span>
+                <div className='roles'> 
+                    <FormInput
+                        label={'User'}
+                        required
+                        type='radio'
+                        name='roles'
+                        value="ROLE_USER"
+                        checked={roles === "ROLE_USER"}
+                        onChange={handleChange}
+                        className='user role'
+                    />
+                    <FormInput
+                        label={'Admin'}
+                        required
+                        type='radio'
+                        name='roles'
+                        value="ROLE_ADMIN"
+                        checked={roles === "ROLE_ADMIN"}
+                        onChange={handleChange}
+                        className='admin role'
+                    />
+                </div>
 
-                <span className={`signUp`}>
-                    <h3 className={`${signUp.error?'error':'success'}`}>
-                        {signUp.value}
-                    </h3>
-                </span>
+                {(signUp.error || signUp.success) &&
+                    <span className={`signUp`}>
+                        <h3 className={`${signUp.error ? 'error' : 'success'}`}>
+                            {signUp.value}
+                        </h3>
+                    </span>}
                 <Buttton buttonType='' type='submit'>Sign Up</Buttton>
             </form>
         </div>

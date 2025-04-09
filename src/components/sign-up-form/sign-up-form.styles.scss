@@ -18,4 +18,25 @@
             color: green;
         }
     }
+
+    .roles{
+        display: flex;
+        justify-content:flex-start;
+        margin-bottom: 15px;
+        margin-top: 5px;
+        .role{
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            margin-right: 10px;
+            
+            input{
+                margin-right:2px;
+                margin-left: 0px;
+            }
+            label{
+                margin-top: 2px;
+            }
+        }
+    }
 }
